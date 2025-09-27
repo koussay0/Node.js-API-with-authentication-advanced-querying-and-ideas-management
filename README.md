@@ -167,3 +167,5 @@ Passwords are stored hashed, never plain text.
 JWT tokens secure API access.
 
 Users can only edit/delete their own ideas.
+
+### This was part of Week 4 Assemssement in USAM learning experience. Thanks for them.
