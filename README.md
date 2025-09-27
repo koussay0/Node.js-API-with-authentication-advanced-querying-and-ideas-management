@@ -1,165 +1,141 @@
-# Node.js-API-with-authentication-advanced-querying-and-ideas-management
+# 🧠 Skills API
 
-# 💡 Ideas API with Authentication
+A simple RESTful API built with **Node.js** and **Express.js** to manage a list of technical and soft skills. This API supports querying, filtering, and retrieving skills data from a JSON file.
 
-A Node.js + Express API that allows users to register, log in, and manage ideas.
-Includes JWT authentication, advanced database querying (filtering, sorting, pagination), and user-specific CRUD operations.
+---
 
-# 🚀 Features
+## 🚀 Features
 
-User registration & login with hashed passwords (bcryptjs).
+- 🔍 Get all skills
+- 🎯 Get skill by ID
+- 📂 Filter skills by category
+- 📈 Filter skills by proficiency
+- 🔡 Sort skills by name
+- 🧪 Query multiple parameters
+- 📝 Built-in request logging
+- ❌ Custom 404 route handling
 
-JWT authentication for protecting routes.
+---
 
-Ideas CRUD API linked to authenticated users.
+## 📁 Project Structure
+skills-api/
+├── data/
+│ └── skills.json # Your skills data file
+├── server.js # Main Express app
+├── package.json
+└── README.md
 
-Advanced querying:
-
-Filtering (by status)
-
-Sorting (by title or createdAt)
-
-Pagination (_limit, _page)
-
-# 🛠️ Technologies Used
-
-Node.js + Express.js
-
-SQLite (or PostgreSQL)
-
-bcryptjs (password hashing)
-
-jsonwebtoken (JWT authentication)
-
-dotenv (environment variables)
-
-# ⚙️ Setup Instructions
-1. Clone and Install
-git clone <your-repo-url>
-cd <your-project>
-npm install
-
-2. Setup Database
-
-Run these SQL commands:
-
-CREATE TABLE users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL
-);
-
-CREATE TABLE ideas (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  title TEXT NOT NULL,
-  description TEXT,
-  status TEXT,
-  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  userId INTEGER
-);
-
-3. Environment Variables
-
-Create a .env file:
-
-JWT_SECRET=your_super_secret_jwt_key
-
-4. Run the Server
+## Start the Server
 node server.js
+or, npm start (not tested)
 
+# Server runs by default on:
+http://localhost:3001
 
-Server runs at: http://localhost:3000
-
-# 📌 API Documentation
-# 🔑 Authentication
-Register a new user
-POST /api/register
-
-
-Body:
+## 🧪 Testing the API with Postman
+✅ Base Route
+GET http://localhost:3001 
+Returns a basic status message.
 
 {
-  "username": "alice",
-  "password": "mypassword"
+  "message": "Skills API is running!"
 }
 
-Login user
-POST /api/login
+<img width="500" height="280" alt="image" src="https://github.com/user-attachments/assets/34e95c08-65ac-49c7-a07f-ed0af4c91ec6" />
 
 
-Body:
+✅ Get All Skills
+
+GET http://localhost:3001/api/skills
+Returns all skills.
+
+<img width="500" height="280" alt="image" src="https://github.com/user-attachments/assets/d60a5cd1-a8ec-48d3-9f8b-1f7e6e75c352" />
+
+Query Parameters (optional):
+
+Param	Example	Description
+proficiency	/api/skills?proficiency=Expert	Filters by proficiency level
+category	/api/skills?category=backend	Filters by skill category
+sort	/api/skills?sort=name	Sorts skills alphabetically by name
+✅ Get Skill by ID
+
+GET /api/skills/:id
+Example:
+GET /api/skills/2
+
+<img width="500" height="280" alt="image" src="https://github.com/user-attachments/assets/2fea3159-ca09-4742-8474-3284f00a7ca2" />
+
+
+Returns a single skill object by id.
+
+✅ Get Skills by Category (Path Param)
+
+GET /api/skills/category/:category
+
+Example:
+GET /api/skills/category/Frontend Framework
+
+<img width="600" height="407" alt="image" src="https://github.com/user-attachments/assets/f02bc237-8fc3-4cc9-94c6-72bbfa5fd040" />
+
+🧰 Example skills.json
+[
+  {
+    "id": 1,
+    "name": "JavaScript",
+    "category": "Programming Language",
+    "proficiency": "Expert",
+    "description": "Modern JavaScript including ES6+ features"
+  },
+  {
+    "id": 2,
+    "name": "Node.js",
+    "category": "Runtime Environment",
+    "proficiency": "Intermediate",
+    "description": "Server-side JavaScript development"
+  }
+]
+
+## 🔍 Request Logging
+
+All incoming requests are logged to the console:
+2025-09-16T12:00:00.000Z - GET /api/skills
+
+## ❌ 404 Handler
+
+Unmatched routes return:
 
 {
-  "username": "alice",
-  "password": "mypassword"
+  "success": false,
+  "message": "Route not found"
+}
+
+## 📦 Scripts
+"scripts": {
+  "start": "node server.js",
+  "dev": "nodemon server.js"
 }
 
 
-Response:
+Use npm run dev for development (requires nodemon).
 
-{
-  "token": "your_jwt_token"
-}
+## 🧪 Optional: curl Commands
 
-💡 Ideas (Protected Routes)
+Test from the terminal:
 
-All requests require header:
+curl http://localhost:3001/api/skills
+curl http://localhost:3001/api/skills/1
+curl "http://localhost:3001/api/skills?proficiency=expert"
+curl "http://localhost:3001/api/skills/category/backend"
 
-Authorization: Bearer <your_token>
+## 👷 Built With
 
-Create Idea
-POST /api/ideas
+Node.js
+Express.js
+Nodemon
+Postman
 
+## 📌 Notes
 
-Body:
+The API is read-only for now (GET only).
 
-{
-  "title": "New Project",
-  "description": "Awesome idea",
-  "status": "Concept"
-}
-
-Get Ideas (with filters)
-GET /api/ideas?status=Concept&sort=title&order=asc&_limit=5&_page=1
-
-Update Idea
-PUT /api/ideas/:id
-
-
-Body:
-
-{
-  "title": "Updated Project",
-  "description": "Improved idea",
-  "status": "In Progress"
-}
-
-Delete Idea
-DELETE /api/ideas/:id
-
-# 🔒 Security
-
-Passwords are stored hashed with bcryptjs.
-
-JWT tokens are used to authenticate requests.
-
-Users can only modify/delete their own ideas.
-
-# 🧪 Testing Flow
-
-Register → POST /api/register
-
-Login → POST /api/login → get JWT token
-
-Use JWT in header to call /api/ideas routes
-
-# 🚧 Challenges & Solutions
-
-Challenge: Securing API endpoints → Solution: Added JWT middleware.
-
-# Credit
-This was part of USAM initiative, Thanks for them.
-
-Challenge: Avoiding plaintext passwords → Solution: Used bcryptjs hashing.
-
-Challenge: Complex querying → Solution: Implemented dynamic SQL with filters, sorting, pagination.
+All data is stored in a local skills.json file — no database required.
