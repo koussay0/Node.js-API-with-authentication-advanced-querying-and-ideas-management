@@ -32,8 +32,8 @@ dotenv (environment variables)
 
 # ⚙️ Setup Instructions
 #### 1. Clone & Install
-git clone <your-repo-url>
-cd secure-ideas-api
+git clone https://github.com/koussay0/Node.js-API-with-authentication-advanced-querying-and-ideas-management
+cd Node.js-API-with-authentication-advanced-querying-and-ideas-management
 npm install
 
 ### 2. Setup Database
