@@ -94,13 +94,13 @@ Body:
 ## ✅ Response:
 ```
 {
-  "token": "your_jwt_token"
+  "token": "your_super_secret_jwt_key"
 }
 ```
 
 # 📌 Use this token in the header:
 
-Authorization: Bearer your_jwt_token
+Authorization: Bearer your_super_secret_jwt_key
 
 # 💡 Ideas API (Protected Routes)
 Create Idea
